@@ -8,6 +8,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  ENV_WASMEDGE_INST: https://raw.githubusercontent.com/WasmEdge/WasmEdge/master/utils/install.sh
 
 jobs:
   build:
@@ -16,6 +17,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: install wasmedge
+      run: |
+        curl --silent --show-error --location $ENV_WASMEDGE_INST
+        bash install.sh
     - name: Build
       run: cargo build --verbose
     - name: Run tests
