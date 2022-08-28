@@ -26,3 +26,20 @@
   - rs-wasi-conv rename "out.dat" to "in.dat"
   - rs-wasi-conv calls 'convert' function of final module
   - out.dat will be created
+
+###### sample shell(detail: see Dockerfile)
+
+1. 1st module parse sample csv file and writes jsonl(out.dat)
+2. 2nd module parse the jsonl(in.dat) and writes cbor(out.dat)
+3. 3rd module does 'nothing'(copys input file)
+
+```
+sh -c '\
+  . ~/.wasmedge/env; \
+  ls \
+    /usr/share/wasm/wasi/wasi_csv2json.wasm \
+    /usr/share/wasm/wasi/wasi_json2cbor.wasm \
+    /usr/share/wasm/wasi/wasi_dummy_copy.wasm \
+  | rs-wasi-conv \
+  '
+```
